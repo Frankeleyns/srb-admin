@@ -7,9 +7,9 @@
 
 vue-element-admin 是基于 element-ui 的一套后台管理系统集成方案。
 
-**GitHub地址：**https://github.com/PanJiaChen/vue-element-admin
+**GitHub地址**: https://github.com/PanJiaChen/vue-element-admin
 
-**项目在线预览：**[https://panjiachen.gitee.io/vue-element-admin](https://panjiachen.gitee.io/vue-element-admin/#/login?redirect=%2Fdashboard)
+**项目在线预览**: [https://panjiachen.gitee.io/vue-element-admin](https://panjiachen.gitee.io/vue-element-admin/#/login?redirect=%2Fdashboard)
 
 ![vue-admin](./img/vue-admin.png)
 
@@ -23,9 +23,9 @@ vue-element-admin 是基于 element-ui 的一套后台管理系统集成方案�
 
 **vue-Admin-template** 是基于 vue-element-admin 的一套后台管理系统**基础模板**（最少精简版），可作为模板进行二次开发。
 
-**GitHub地址：**https://github.com/PanJiaChen/vue-admin-template
+**GitHub地址**: https://github.com/PanJiaChen/vue-admin-template
 
-**根据用户角色来动态生成侧边栏的分支：**https://github.com/PanJiaChen/vue-admin-template/tree/permission-control
+**根据用户角色来动态生成侧边栏的分支**: https://github.com/PanJiaChen/vue-admin-template/tree/permission-control
 
 
 
