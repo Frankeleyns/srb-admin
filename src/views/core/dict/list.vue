@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 10px">
       <el-button
         @click="dialogVisible = true"
         type="primary"
@@ -9,6 +9,14 @@
       >
         导入Excel
       </el-button>
+
+      <el-button
+        @click="exportData"
+        type="primary"
+        size="mini"
+        icon="el-icon-upload2"
+        >导出Excel</el-button
+      >
     </div>
 
     <el-dialog title="数据字典导入" :visible.sync="dialogVisible" width="30%">
@@ -29,56 +37,60 @@
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
-      </el-form>                                                                                                                                                                                           
+      </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">
-          取消
-        </el-button>
+        <el-button @click="dialogVisible = false"> 取消 </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
- <script>
+<script>
 export default {
-    // 定义数据模型
-    data() {
-        return {
-            dialogVisible: false, // 上传文件对话框是否开启
-            BASE_API: process.env.VUE_APP_BASE_API //获取后端接口地址
-        }
+  // 定义数据模型
+  data() {
+    return {
+      dialogVisible: false, // 上传文件对话框是否开启
+      BASE_API: process.env.VUE_APP_BASE_API, //获取后端接口地址
+    };
+  },
+  methods: {
+    // 上传之前，判断文件类型，只能上传 Excel
+    beforeFileUpload(file) {
+      const fileType =
+        file.type ===
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        file.type === "application/vnd.ms-excel";
+      if (!fileType) {
+        this.$message.error("请上传 Excel 文件");
+      }
+      return fileType;
     },
-    methods: {
-        // 上传之前，判断文件类型，只能上传 Excel
-        beforeFileUpload(file) {
-            const fileType = file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-                        file.type === "application/vnd.ms-excel";            
-            if(!fileType) {
-                this.$message.error("请上传 Excel 文件")
-            }
-            return fileType
-        },
 
-        // 文件上传超出
-        fileUploadExceed() {
-            this.$message.warning("只能上传一个文件")
-        },
+    // 文件上传超出
+    fileUploadExceed() {
+      this.$message.warning("只能上传一个文件");
+    },
 
-        // 文件上传成功
-        fileUploadSuccess(res) {
-            if(res.code == 0){
-                this.$message.success("数据导入成功")
-                this.dialogVisible = false
-            } else {
-                this.$meesage.error(res.message)
-            }
-            
-        },
+    // 文件上传成功
+    fileUploadSuccess(res) {
+      if (res.code == 0) {
+        this.$message.success("数据导入成功");
+        this.dialogVisible = false;
+      } else {
+        this.$meesage.error(res.message);
+      }
+    },
 
-        // 文件上传失败
-        fileUploadError(error) {
-            this.$message.error("数据导入失败")
-        }
-    }
-}
+    // 文件上传失败
+    fileUploadError(error) {
+      this.$message.error("数据导入失败");
+    },
+
+    //Excel数据导出
+    exportData() {
+      window.location.href = this.BASE_API + "/admin/core/dict/export";
+    },
+  },
+};
 </script>
