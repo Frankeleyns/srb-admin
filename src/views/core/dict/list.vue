@@ -42,19 +42,44 @@
         <el-button @click="dialogVisible = false"> 取消 </el-button>
       </div>
     </el-dialog>
+
+    <el-table :data="list" border row-key="id" lazy :load="load">
+      <el-table-column label="名称" align="left" prop="name" />
+      <el-table-column label="编码" prop="dictCode" />
+      <el-table-column label="值" align="left" prop="value" />
+    </el-table>
   </div>
 </template>
 
 <script>
+import dictApi from '@/api/core/dict'
+
 export default {
   // 定义数据模型
   data() {
     return {
       dialogVisible: false, // 上传文件对话框是否开启
-      BASE_API: process.env.VUE_APP_BASE_API, //获取后端接口地址
+      BASE_API: process.env.VUE_APP_BASE_API, // 获取后端接口地址
+      list: [] // 数据字典集合
     };
   },
+  
+  created() {
+    this.fatchData()
+  },
   methods: {
+    // 获取第一级数据字典列表
+    fatchData() {
+      dictApi.listByParentId(1).then(res => {
+        this.list = res.data.list
+      })
+    },
+    // 查询子节点
+    load(row, treeNode, resolve) {
+      dictApi.listByParentId(row.id).then(res => 
+        resolve(res.data.list)
+      )
+    },
     // 上传之前，判断文件类型，只能上传 Excel
     beforeFileUpload(file) {
       const fileType =
@@ -77,6 +102,7 @@ export default {
       if (res.code == 0) {
         this.$message.success("数据导入成功");
         this.dialogVisible = false;
+        this.fatchData();
       } else {
         this.$meesage.error(res.message);
       }
