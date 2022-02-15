@@ -104,6 +104,22 @@ export const constantRoutes = [
   },
 
   {
+    path: "/core/user-info",
+    component: Layout,
+    redirect: '/core/user-info/list',
+    meta: { title: '会员管理', icon: 'user' },
+    alwaysShow: true,
+    children: [
+      {
+        path: "list",
+        name: "会员列表",
+        component: () => import("@/views/core/user-info/list"),
+        meta: {title: "会员列表" }
+      }
+    ]
+  },
+
+  {
     path: "/example",
     component: Layout,
     redirect: "/example/table",
