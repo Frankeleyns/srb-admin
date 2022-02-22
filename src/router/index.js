@@ -120,6 +120,29 @@ export const constantRoutes = [
   },
 
   {
+    path: "/core/borrower",
+    component: Layout,
+    redirect: '/core/borrower/list',
+    meta: { title: '借款管理', icon: 'user' },
+    alwaysShow: true,
+    children: [
+      {
+        path: "list",
+        name: "借款人列表",
+        component: () => import("@/views/core/borrower/list"),
+        meta: {title: "借款人列表" }
+      },
+      {
+        path: "detail/:id",
+        name: "借款人详情",
+        component: () => import("@/views/core/borrower/detail"),
+        meta: {title: "借款人详情" },
+        hidden: true
+      },
+    ]
+  },
+
+  {
     path: "/example",
     component: Layout,
     redirect: "/example/table",
