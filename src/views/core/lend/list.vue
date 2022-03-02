@@ -42,33 +42,46 @@
 </template>
 
 <script>
-
-import lendApi from '@/api/core/lend'
+import lendApi from "@/api/core/lend";
 
 export default {
   data() {
     return {
-      list: null // 列表
-    }
+      list: null, // 列表
+    };
   },
 
   created() {
-    this.fetchData()
+    this.fetchData();
   },
 
   methods: {
-    // 放款  
-    makeLoan() {
-        alert("放款")
+    // 放款
+    makeLoan(id) {
+      this.$confirm("确定放款吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        lendApi.makeLoan(id).then(res => {
+        // 处理放款结果
+        //this.fetchData();
+        console.log(res);
+        this.$message.success(res.message)
+        })
+      }).catch(error => {
+        if(error == 'cancel') {
+          this.$message.info('已取消放款')
+        }
+      })
     },
 
     // 加载列表数据
     fetchData() {
-      lendApi.getList().then(response => {
-        this.list = response.data.list
-      })
-    }
-  }
-}
-
+      lendApi.getList().then((response) => {
+        this.list = response.data.list;
+      });
+    },
+  },
+};
 </script>
